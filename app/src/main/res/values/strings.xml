@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CPE</string>
+    <string name="home">Home</string>
+    <string name="schedule">Schedule</string>
+    <string name="resources">Resources</string>
+    <string name="more">More</string>
 </resources>
