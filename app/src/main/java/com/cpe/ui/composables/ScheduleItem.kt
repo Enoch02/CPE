@@ -67,13 +67,11 @@ fun ScheduleItem(modifier: Modifier, course: Course) {
                             text = course.courseCode,
                             fontSize = MaterialTheme.typography.labelLarge.fontSize,
                             fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
-                            softWrap = true,
                             maxLines = 1,
                         )
                         Text(
                             text = course.lecturer,
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                            softWrap = true,
                             maxLines = 1,
                         )
                     }
@@ -105,7 +103,6 @@ fun ScheduleItem(modifier: Modifier, course: Course) {
                             text = "Time",
                             fontSize = MaterialTheme.typography.labelLarge.fontSize,
                             fontWeight = FontWeight.Bold,
-                            softWrap = true,
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1,
                         )
@@ -113,7 +110,6 @@ fun ScheduleItem(modifier: Modifier, course: Course) {
                             text = "${course.startTime} - ${course.endTime}",
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             maxLines = 1,
-                            softWrap = true,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }

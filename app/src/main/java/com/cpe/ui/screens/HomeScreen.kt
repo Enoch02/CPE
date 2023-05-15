@@ -59,7 +59,6 @@ fun TodayClassesView(
             text = "Today's Classes",
             fontSize = MaterialTheme.typography.headlineLarge.fontSize,
             maxLines = 1,
-            softWrap = true,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(start = 10.dp)
         )
@@ -106,7 +105,6 @@ fun NewsComposable(listState: LazyListState) {
         text = "News",
         fontSize = MaterialTheme.typography.headlineLarge.fontSize,
         maxLines = 1,
-        softWrap = true,
         overflow = TextOverflow.Ellipsis,
         modifier = Modifier.padding(start = 10.dp)
     )

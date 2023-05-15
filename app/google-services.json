@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "593387977558",
+    "project_id": "cpe-project-eef93",
+    "storage_bucket": "cpe-project-eef93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593387977558:android:f0e5cb7db0af951c59f4f7",
+        "android_client_info": {
+          "package_name": "com.cpe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593387977558-q4deh73qac5c94qka10c84b4re41esi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm3dB0ecsZebBZLH9c8ISAIjcX3BhAhyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593387977558-q4deh73qac5c94qka10c84b4re41esi9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
