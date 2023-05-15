@@ -129,7 +129,7 @@ fun NewsComposable(listState: LazyListState) {
             content = ""
         ),
     )
-    val width = (LocalConfiguration.current.screenWidthDp.dp) - 8.dp
+    val width = (LocalConfiguration.current.screenWidthDp.dp) - 16.dp
 
     LazyRow(
         modifier = Modifier.fillMaxWidth(),

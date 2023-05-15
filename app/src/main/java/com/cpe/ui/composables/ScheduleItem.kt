@@ -111,6 +111,7 @@ fun ScheduleItem(modifier: Modifier, course: Course) {
                         )
                         Text(
                             text = "${course.startTime} - ${course.endTime}",
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             maxLines = 1,
                             softWrap = true,
                             overflow = TextOverflow.Ellipsis,

@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class, ExperimentalPagerApi::class)
 
 package com.cpe.ui.screens.schedule
 
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -53,11 +54,13 @@ fun ScheduleScreen(
                     content = {
                         Text(
                             text = day,
+                            fontSize = MaterialTheme.typography.labelSmall.fontSize,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(8.dp)
                         )
-                    }
+                    },
+                    modifier = Modifier.height(50.dp)
                 )
             }
         }
