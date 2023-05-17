@@ -17,6 +17,7 @@ fun NavigationGraph(
 ) {
     val startDestination = if (authViewModel.isUserLoggedIn())
         Screen.MainScaffold.route else Screen.AuthScreen.route
+
     NavHost(
         navController = navController,
         startDestination = startDestination,

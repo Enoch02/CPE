@@ -59,4 +59,5 @@ class AuthViewModel @Inject constructor(private val repository: FirebaseReposito
             }
         }
     }
+
 }

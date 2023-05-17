@@ -1,15 +1,21 @@
 package com.cpe.data.repository
 
+import com.cpe.data.models.Course
+import com.cpe.data.models.TimeTable
 import com.cpe.util.Resource
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirebaseRepositoryImpl @Inject constructor(private val firebaseAuth: FirebaseAuth) :
+class FirebaseRepositoryImpl @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
+    private val db: FirebaseFirestore
+) :
     FirebaseRepository {
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
@@ -35,4 +41,7 @@ class FirebaseRepositoryImpl @Inject constructor(private val firebaseAuth: Fireb
         }
     }
 
+    fun sendSome() {
+
+    }
 }

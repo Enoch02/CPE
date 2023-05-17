@@ -6,10 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cpe.data.models.Course
 import com.cpe.data.models.TimeTable
+import com.cpe.data.repository.FirebaseRepository
+import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ScheduleViewModel : ViewModel() {
+@HiltViewModel
+class ScheduleViewModel @Inject constructor(private val repository: FirebaseRepository) :
+    ViewModel() {
     val days = listOf("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
     val today = when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
         Calendar.SUNDAY -> 0

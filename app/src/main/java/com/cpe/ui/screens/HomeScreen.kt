@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cpe.data.models.News
 import com.cpe.ui.composables.NewsItem
@@ -50,7 +51,7 @@ fun HomeScreen(modifier: Modifier, onViewMoreClicked: () -> Unit) {
 @Composable
 fun TodayClassesView(
     onViewMoreClicked: () -> Unit,
-    scheduleViewModel: ScheduleViewModel = viewModel()
+    scheduleViewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val todayClasses = scheduleViewModel.getTodayClasses()
 
