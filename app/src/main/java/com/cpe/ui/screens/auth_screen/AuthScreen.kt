@@ -3,6 +3,7 @@ package com.cpe.ui.screens.auth_screen
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +22,6 @@ import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -51,15 +51,32 @@ import com.cpe.ui.navigation.Screen
 import kotlinx.coroutines.launch
 
 @Composable
-fun AuthScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
+fun AuthScreen(authViewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
-    val registrationState = viewModel.registrationState.collectAsState(initial = null)
-    val loginState = viewModel.loginState.collectAsState(initial = null)
+    val registrationState = authViewModel.registrationState.collectAsState(initial = null)
+    val loginState = authViewModel.loginState.collectAsState(initial = null)
+    var authMode by rememberSaveable { mutableStateOf(AuthMode.SIGN_IN) }
 
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+    val onRegBtnClick = {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            authViewModel.registerUser(email, password)
+        } else {
+            Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show()
+        }
+    }
+    val onLoginBtnClicked = {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            authViewModel.loginUser(email, password)
+        } else {
+            Toast.makeText(context, "Invalid Input", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -69,7 +86,7 @@ fun AuthScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavCon
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
             Text(
-                text = "Log In or Create a New Account",
+                text = if (authMode == AuthMode.SIGN_IN) "Log In" else "Create a New Account",
                 fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 textAlign = TextAlign.Center
             )
@@ -126,39 +143,66 @@ fun AuthScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavCon
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
-                keyboardActions = KeyboardActions(onDone = { viewModel.loginUser(email, password) })
+                keyboardActions = KeyboardActions(onDone = {
+                    authViewModel.loginUser(
+                        email,
+                        password
+                    )
+                })
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = { viewModel.loginUser(email, password) },
-                content = {
-                    Text(text = "Log In")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
+            when (authMode) {
+                AuthMode.SIGN_IN -> {
+                    Button(
+                        onClick = { onLoginBtnClicked() },
+                        content = {
+                            Text(text = "Log In")
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        TextButton(
+                            onClick = { authMode = AuthMode.SIGN_UP },
+                            content = {
+                                Text(text = "create an account")
+                            },
+                        )
 
-            FilledTonalButton(
-                onClick = { viewModel.registerUser(email, password) },
-                content = {
-                    Text(text = "Sign Up")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
+                        TextButton(
+                            onClick = { /*TODO*/ },
+                            content = {
+                                Text(text = "reset password")
+                            },
+                        )
+                    }
+                }
 
-            TextButton(
-                onClick = { /*TODO*/ },
-                content = {
-                    Text(text = "reset password")
-                },
-                modifier = Modifier.align(Alignment.End)
-            )
+                AuthMode.SIGN_UP -> {
+                    Button(
+                        onClick = onRegBtnClick,
+                        content = {
+                            Text(text = "Sign Up")
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    TextButton(
+                        onClick = { authMode = AuthMode.SIGN_IN },
+                        content = {
+                            Text(text = "sign in")
+                        },
+                        modifier = Modifier.align(Alignment.End)
+                    )
+                }
+            }
         }
     )
 
-    //TODO: replace the toasts with snackbars
-    val context = LocalContext.current
+    //TODO: replace the toasts with snackbars?
     LaunchedEffect(key1 = registrationState.value?.isSuccess) {
         scope.launch {
             if (registrationState.value?.isSuccess?.isNotEmpty() == true) {

@@ -18,6 +18,8 @@ class AuthViewModel @Inject constructor(private val repository: FirebaseReposito
     val registrationState = _registrationState.receiveAsFlow()
     val loginState = _loginState.receiveAsFlow()
 
+    fun isUserLoggedIn() = repository.isUserLoggedIn()
+
     fun registerUser(email: String, password: String) {
         viewModelScope.launch {
             repository.registerUser(email, password).collect { result ->
