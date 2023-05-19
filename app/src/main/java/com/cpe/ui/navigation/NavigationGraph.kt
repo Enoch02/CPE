@@ -7,16 +7,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cpe.ui.screens.MainScaffold
-import com.cpe.ui.screens.auth_screen.AuthScreen
-import com.cpe.ui.screens.auth_screen.AuthViewModel
+import com.cpe.ui.screens.auth.AuthScreen
+import com.cpe.ui.screens.auth.AuthViewModel
+import com.cpe.ui.screens.gpcalculator.GpCalculatorScreen
+import com.cpe.ui.screens.news.NewsScreen
+import com.cpe.ui.screens.outlines.OutlineScreen
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController = rememberNavController(),
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-    val startDestination = if (authViewModel.isUserLoggedIn())
-        Screen.MainScaffold.route else Screen.AuthScreen.route
+    val startDestination = /*if (authViewModel.isUserLoggedIn())
+        Screen.MainScaffold.route else Screen.AuthScreen.route*/
+        Screen.MainScaffold.route
 
     NavHost(
         navController = navController,
@@ -28,6 +32,18 @@ fun NavigationGraph(
 
             composable(Screen.MainScaffold.route) {
                 MainScaffold(navController = navController)
+            }
+
+            composable(Screen.GpCalculatorScreen.route) {
+                GpCalculatorScreen()
+            }
+
+            composable(Screen.OutlineScreen.route) {
+                OutlineScreen()
+            }
+
+            composable(Screen.NewsScreen.route) {
+                NewsScreen()
             }
         }
     )

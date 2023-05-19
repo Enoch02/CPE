@@ -1,4 +1,4 @@
-package com.cpe.ui.screens.auth_screen
+package com.cpe.ui.screens.auth
 
 enum class AuthMode {
     SIGN_IN,

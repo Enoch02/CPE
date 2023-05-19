@@ -1,4 +1,4 @@
-package com.cpe.ui.screens.auth_screen
+package com.cpe.ui.screens.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -62,7 +62,7 @@ fun ScheduleScreen(
         var selectedItem by rememberSaveable { mutableStateOf(items[1]) }
         var expanded by remember { mutableStateOf(false) }
 
-        Box(
+        /*Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -106,7 +106,7 @@ fun ScheduleScreen(
                 }
             }
         }
-
+*/
         TabRow(selectedTabIndex = pagerState.currentPage) {
             scheduleViewModel.days.forEachIndexed { index, day ->
                 Tab(

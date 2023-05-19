@@ -1,4 +1,4 @@
-package com.cpe.ui.screens.auth_screen
+package com.cpe.ui.screens.auth
 
 data class AuthState(
     val isLoading: Boolean = false,

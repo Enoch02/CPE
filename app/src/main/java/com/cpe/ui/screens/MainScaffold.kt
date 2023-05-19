@@ -47,13 +47,13 @@ fun MainScaffold(navController: NavController) {
             TopAppBar(
                 title = { Text(text = stringResource(id = R.string.app_name)) },
                 actions = {
-                    IconButton(
-                        onClick = { /*TODO*/ },
+                    /*IconButton(
+                        onClick = { *//*TODO*//* },
                         content = {
                             //TODO: Replace
                             Icon(imageVector = Icons.Filled.Person, contentDescription = "profile")
                         }
-                    )
+                    )*/
                 },
                 scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
             )
@@ -63,13 +63,13 @@ fun MainScaffold(navController: NavController) {
             val icons = listOf(
                 Icons.Filled.Home,
                 Icons.Filled.CalendarMonth,
-                Icons.Filled.Book,
+                /*Icons.Filled.Book,*/
                 Icons.Filled.MoreHoriz
             )
             val labels = listOf(
                 stringResource(R.string.home),
                 stringResource(R.string.schedule),
-                stringResource(R.string.resources),
+                /*stringResource(R.string.resources),*/
                 stringResource(R.string.more)
             )
 
@@ -99,12 +99,13 @@ fun MainScaffold(navController: NavController) {
                 content = { _currentScreen ->
                     when (_currentScreen) {
                         MainScaffoldScreens.HOME_SCREEN -> {
-                            HomeScreen(
+                            /*HomeScreen(
                                 modifier = Modifier.padding(paddingValues),
                                 onViewMoreClicked = {
                                     currentScreen = MainScaffoldScreens.SCHEDULE_SCREEN
                                 }
-                            )
+                            )*/
+                            NewHomeScreen(modifier = Modifier.padding(paddingValues), navController)
                         }
 
                         MainScaffoldScreens.SCHEDULE_SCREEN -> {
@@ -114,9 +115,9 @@ fun MainScaffold(navController: NavController) {
                             )
                         }
 
-                        MainScaffoldScreens.RESOURCES_SCREEN -> {
+                        /*MainScaffoldScreens.RESOURCES_SCREEN -> {
 
-                        }
+                        }*/
 
                         MainScaffoldScreens.MORE_SCREEN -> {
 

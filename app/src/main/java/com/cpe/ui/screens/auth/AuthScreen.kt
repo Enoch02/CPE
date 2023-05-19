@@ -1,4 +1,4 @@
-package com.cpe.ui.screens.auth_screen
+package com.cpe.ui.screens.auth
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
