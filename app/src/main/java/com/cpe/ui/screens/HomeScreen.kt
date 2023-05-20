@@ -4,6 +4,7 @@ package com.cpe.ui.screens
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -52,17 +53,19 @@ import com.cpe.ui.screens.schedule.ScheduleViewModel
 
 @Composable
 fun NewHomeScreen(modifier: Modifier, navController: NavController) {
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(128.dp),
         ) {
-            val context = LocalContext.current
             val intent = remember {
                 Intent(
                     Intent.ACTION_VIEW,
@@ -83,7 +86,7 @@ fun NewHomeScreen(modifier: Modifier, navController: NavController) {
             Spacer(modifier = Modifier.width(16.dp))
 
             GridItem(
-                label = "GP Calculator",
+                label = "GPA Calculator",
                 icon = painterResource(id = R.drawable.baseline_calculate_24),
                 modifier = Modifier
                     .fillMaxSize()
@@ -114,7 +117,6 @@ fun NewHomeScreen(modifier: Modifier, navController: NavController) {
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            //TODO: Dropdown cards??
             GridItem(
                 label = "News & Events",
                 icon = painterResource(id = R.drawable.newspaper),
@@ -139,7 +141,10 @@ fun NewHomeScreen(modifier: Modifier, navController: NavController) {
                 icon = painterResource(id = R.drawable.baseline_library_books),
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(1f)
+                    .weight(1f),
+                onClick = {
+                    Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show()
+                }
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -280,17 +285,14 @@ fun NewsComposable(listState: LazyListState) {
     val news = listOf(
         News(
             headline = "Headline",
-            shortDesc = "Short Description",
             content = ""
         ),
         News(
             headline = "Headline",
-            shortDesc = "Short Description",
             content = ""
         ),
         News(
             headline = "Headline",
-            shortDesc = "Short Description",
             content = ""
         ),
     )

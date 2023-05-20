@@ -1,19 +1,25 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.cpe.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,7 +50,7 @@ fun NewsItem(modifier: Modifier, news: News) {
                     modifier = modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = news.shortDesc)
+                Text(text = news.content)
             }
         }
     )
@@ -53,14 +59,14 @@ fun NewsItem(modifier: Modifier, news: News) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun Preview() {
-    Column {
+    Column(modifier = Modifier.fillMaxSize()) {
         NewsItem(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.height(IntrinsicSize.Max),
             news = News(
-                headline = "Soccer is fun",
-                shortDesc = "Short description",
-                content = "Something interesting"
+                headline = "Headline",
+                content = stringResource(
+                    id = R.string.lorem
+                )
             )
         )
     }

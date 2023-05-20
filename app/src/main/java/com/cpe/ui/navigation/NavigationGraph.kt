@@ -35,7 +35,7 @@ fun NavigationGraph(
             }
 
             composable(Screen.GpCalculatorScreen.route) {
-                GpCalculatorScreen()
+                GpCalculatorScreen(navController)
             }
 
             composable(Screen.OutlineScreen.route) {
