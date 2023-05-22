@@ -56,8 +56,10 @@ fun ScheduleScreen(
 ) {
     val pagerState = rememberPagerState()
     val context = LocalContext.current
-    val level by configViewModel.getLevelValue(context).collectAsState(initial = "300")
-    scheduleViewModel.selectedLevel.value = level
+    if (scheduleViewModel.selectedLevel.value.isNullOrEmpty()) {
+        val level by configViewModel.getLevelValue(context).collectAsState(initial = "300")
+        scheduleViewModel.selectedLevel.value = level
+    }
 
     LaunchedEffect(key1 = scheduleViewModel.today) {
         pagerState.animateScrollToPage(scheduleViewModel.today)
@@ -90,7 +92,7 @@ fun ScheduleScreen(
                 ScheduleView(
                     state = rememberLazyListState(),
                     day = dayInt.toString(),
-                    level = scheduleViewModel.selectedLevel.value
+                    level = scheduleViewModel.selectedLevel.value!!
                 )
             }
         )

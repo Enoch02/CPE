@@ -4,6 +4,7 @@ import android.content.Context
 import android.icu.util.Calendar
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -33,7 +34,7 @@ class ScheduleViewModel @Inject constructor(private val repository: FirebaseRepo
         else -> 0
     }
     val levels = Constants.levels
-    var selectedLevel = mutableStateOf("300")
+    var selectedLevel: MutableState<String?> = mutableStateOf(null)
     val timeTables = mutableStateListOf<TimeTable>()
 
     init {
