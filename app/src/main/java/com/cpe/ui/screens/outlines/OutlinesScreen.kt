@@ -5,6 +5,7 @@ package com.cpe.ui.screens.outlines
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -233,20 +235,31 @@ fun OutlineDetail(
         }
     )
 
-    LazyColumn(
-        modifier = modifier.fillMaxWidth(),
-        content = {
-            items(
-                count = details?.size ?: 0,
-                itemContent = { index ->
-                    ListItem(
-                        headlineContent = { Text(text = details?.get(index) ?: "") },
-                    )
-                    Divider()
-                }
-            )
-        }
-    )
+    if (!details.isNullOrEmpty()) {
+        LazyColumn(
+            modifier = modifier.fillMaxWidth(),
+            content = {
+                items(
+                    count = details.size,
+                    itemContent = { index ->
+                        ListItem(
+                            headlineContent = { Text(text = details[index]) },
+                        )
+                        Divider()
+                    }
+                )
+            }
+        )
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            content = {
+                Text(text = "There's nothing here...")
+            }
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)

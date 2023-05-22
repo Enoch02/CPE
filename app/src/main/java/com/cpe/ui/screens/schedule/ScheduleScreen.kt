@@ -139,7 +139,7 @@ fun ScheduleView(
                         ListItem(
                             headlineContent = {
                                 Text(
-                                    text = classes[index].courseTitle.orEmpty(),
+                                    text = classes[index].courseCode.orEmpty(),
                                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                                 )
                             },
@@ -157,10 +157,9 @@ fun ScheduleView(
                             supportingContent = {
                                 Column {
                                     Text(
-                                        text = classes[index].courseCode.orEmpty(),
+                                        text = classes[index].courseTitle.orEmpty(),
                                         fontSize = MaterialTheme.typography.labelLarge.fontSize,
                                         fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
-                                        maxLines = 1,
                                     )
                                     Text(
                                         text = classes[index].lecturer.orEmpty(),
