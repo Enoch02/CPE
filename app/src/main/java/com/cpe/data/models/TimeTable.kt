@@ -1,7 +1,10 @@
 package com.cpe.data.models
 
+import com.google.firebase.firestore.DocumentId
+
 data class TimeTable(
-    val semester: String,
-    val level: String,
-    val classes: List<Course>
+    @DocumentId
+    val documentId: String? = null,
+    val level: String? = null,
+    val classes: List<Course>? = null
 )

@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">CPE</string>
+    <string name="app_name">CPE App</string>
     <string name="home">Home</string>
     <string name="schedule">Schedule</string>
     <string name="resources">Resources</string>
     <string name="more">More</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse egestas sodales dui, vel placerat massa vehicula eget. Morbi non nunc arcu. Nullam diam ipsum, feugiat in diam et, rhoncus faucibus eros. Maecenas eu tincidunt turpis. Fusce a quam in arcu vulputate feugiat. Fusce semper neque a nisl fringilla ornare. Aenean a accumsan leo, nec vestibulum nisl. Etiam nec erat dignissim, volutpat elit vel, finibus felis. Cras libero tortor, dapibus id porttitor a, porta in lectus. Pellentesque dapibus sem ac diam vestibulum, sed faucibus tellus finibus. Fusce quis fringilla augue, nec finibus dui. Sed scelerisque fringilla commodo. Fusce rutrum tincidunt fermentum. Nunc congue mauris non luctus pulvinar.
+
+Duis dui quam, lobortis ut mollis ac, varius vel nisl. Nullam eu dui facilisis, efficitur mauris a, efficitur ante. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut ultrices iaculis lacus nec porta. Maecenas semper mattis lorem, vel pretium metus elementum quis. Etiam venenatis scelerisque velit, eu pretium lacus suscipit nec. Praesent sed mauris ut tellus hendrerit accumsan. Vestibulum dignissim porttitor massa, in dignissim libero imperdiet vel. Curabitur et ligula luctus, egestas felis et, pretium orci. Phasellus et vestibulum massa. Curabitur auctor lacinia ex id tristique. Pellentesque ac aliquam nisl. Maecenas sagittis arcu justo, in hendrerit tortor pharetra non.
+
+Nam elementum, metus lacinia vestibulum aliquam, metus erat ultricies massa, quis ultricies nulla augue sit amet eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at urna elit. Cras quam libero, porta non sapien a, suscipit placerat erat. Integer eu turpis et nunc rutrum scelerisque. Fusce congue nisi non est venenatis, sed convallis felis auctor. Donec ut pulvinar quam. Donec feugiat gravida enim, eu varius leo eleifend id. Sed sollicitudin ligula sed hendrerit gravida. Suspendisse et nisl ullamcorper, viverra nisi a, tempor lacus.
+
+Pellentesque fermentum feugiat dui. Proin ultricies tortor sed lacus porta vehicula. Aenean nunc ligula, aliquet vel ex nec, molestie venenatis est. Quisque iaculis elementum purus sit amet tempor. Aenean ac nisi vitae sapien lacinia pretium. Aliquam quis dolor sit amet magna lacinia condimentum. Vivamus sollicitudin turpis enim. Nunc tincidunt gravida sodales.
+
+Proin sodales lorem commodo mi placerat consectetur. Duis rutrum imperdiet felis. Nam vitae enim libero. Mauris sollicitudin dignissim dolor, vitae finibus enim vestibulum sit amet. Suspendisse in odio mauris. Fusce vel pellentesque diam. Sed scelerisque dapibus mauris et porta. Vestibulum quis interdum lorem.</string>
 </resources>
