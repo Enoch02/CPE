@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,9 +54,6 @@ fun GpCalculatorScreen(
     val courses = gpCalcViewModel.courses
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
         topBar = {
             TopAppBar(
                 title = { Text(text = "GPA Calculator") },
@@ -89,7 +85,7 @@ fun GpCalculatorScreen(
 
                     IconButton(
                         onClick = {
-                            courses.add(GpCalcCourse("", "A", "1"))
+                            courses.add(GpCalcCourse("", "A", "2"))
                             scope.launch {
                                 listState.scrollToItem(courses.lastIndex)
                             }
@@ -102,7 +98,9 @@ fun GpCalculatorScreen(
             )
         },
         content = { paddingValues ->
-            Column(modifier = Modifier.padding(paddingValues)) {
+            Column(modifier = Modifier
+                .padding(paddingValues)
+                .padding(8.dp)) {
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = "Course (optional)",

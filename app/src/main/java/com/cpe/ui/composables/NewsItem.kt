@@ -42,7 +42,7 @@ fun NewsItem(modifier: Modifier, news: News) {
             )
             Column(modifier = Modifier.padding(8.dp)) {
                 Text(
-                    text = news.headline,
+                    text = news.headline.orEmpty(),
                     fontSize = MaterialTheme.typography.titleLarge.fontSize,
                     maxLines = 1,
                     softWrap = true,
@@ -50,7 +50,7 @@ fun NewsItem(modifier: Modifier, news: News) {
                     modifier = modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = news.content)
+                Text(text = news.content.orEmpty())
             }
         }
     )

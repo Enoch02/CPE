@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.cpe.ui.screens.AboutScreen
 import com.cpe.ui.screens.MainScaffold
 import com.cpe.ui.screens.auth.AuthScreen
 import com.cpe.ui.screens.auth.AuthViewModel
@@ -35,15 +36,19 @@ fun NavigationGraph(
             }
 
             composable(Screen.GpCalculatorScreen.route) {
-                GpCalculatorScreen(navController)
+                GpCalculatorScreen(navController = navController)
             }
 
             composable(Screen.OutlineScreen.route) {
-                OutlineScreen()
+                OutlineScreen(navController = navController)
             }
 
             composable(Screen.NewsScreen.route) {
-                NewsScreen()
+                NewsScreen(navController = navController)
+            }
+
+            composable(Screen.AboutScreen.route) {
+                AboutScreen(navController = navController)
             }
         }
     )

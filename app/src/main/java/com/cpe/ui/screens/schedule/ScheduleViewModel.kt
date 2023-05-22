@@ -1,21 +1,26 @@
 package com.cpe.ui.screens.schedule
 
+import android.content.Context
 import android.icu.util.Calendar
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cpe.data.models.Course
 import com.cpe.data.models.TimeTable
 import com.cpe.data.repository.FirebaseRepository
-import com.google.firebase.firestore.FirebaseFirestore
+import com.cpe.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(private val repository: FirebaseRepository) :
     ViewModel() {
+    private val classes = mutableStateListOf<Course>()
+
     val days = listOf("Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat")
     val today = when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
         Calendar.SUNDAY -> 0
@@ -27,109 +32,50 @@ class ScheduleViewModel @Inject constructor(private val repository: FirebaseRepo
         Calendar.SATURDAY -> 6
         else -> 0
     }
-    private var timeTable = mutableStateOf(
-        TimeTable(
-            semester = "",
-            level = "",
-            classes = emptyList()
-        )
-    )
+    val levels = Constants.levels
+    var selectedLevel = mutableStateOf("300")
+    val timeTables = mutableStateListOf<TimeTable>()
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
-            timeTable.value = TimeTable(
-                semester = "Rain",
-                level = "300",
-                classes = listOf(
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 101",
-                        dayOfWeek = 1,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "A Lecturer",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 101",
-                        dayOfWeek = 1,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "A Lecturer",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 101",
-                        dayOfWeek = 1,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "A Lecturer",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 102",
-                        dayOfWeek = 2,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "You",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEM0 103",
-                        dayOfWeek = 3,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "You",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 112",
-                        dayOfWeek = 5,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "Lol",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 112",
-                        dayOfWeek = 4,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "Lol",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 112",
-                        dayOfWeek = 4,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "Lol",
-                    ),
-                    Course(
-                        courseTitle = "Demo Course",
-                        courseCode = "DEMO 112",
-                        dayOfWeek = 4,
-                        startTime = "8:00 am",
-                        endTime = "9:00 am",
-                        lecturer = "A Lecturer",
-                    ),
-                )
-            )
+        getData()
+    }
+
+    fun getClasses(level: String) {
+        val table = timeTables.filter { level == it.level }
+        if (table.isNotEmpty()) {
+            classes.addAll(table.first().classes!!)
         }
     }
 
-    fun filterClasses(day: Int): List<Course> {
-        return timeTable.value.classes.filter { it.dayOfWeek == day }
+    fun filterClasses(day: String, level: String, timeTables: List<TimeTable>): List<Course> {
+        val timeTable = timeTables.find { it.level == level }
+
+        if (timeTable != null) {
+            return timeTable.classes!!.filter { it.dayOfWeek == day }
+        }
+
+        return emptyList()
     }
 
-    /**
-     * Get only 2 for preview
-     */
-    fun getTodayClasses(): List<Course> {
-        val classes = timeTable.value.classes.filter { it.dayOfWeek == today }
-        return when {
-            classes.size >= 3 -> classes.subList(0, 2)
-            else -> classes
+    private fun getData() {
+        viewModelScope.launch {
+            val data = repository.getData()
+            Log.d("TAG", "getData: $data")
+            timeTables.addAll(data)
+        }
+    }
+
+    fun checkForDataUpdate(context: Context) {
+        viewModelScope.launch {
+            val temp = repository.getData()
+
+            if (temp == timeTables) {
+                Toast.makeText(context, "No changes are available", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
+                timeTables.clear()
+                timeTables.addAll(temp)
+            }
         }
     }
 }

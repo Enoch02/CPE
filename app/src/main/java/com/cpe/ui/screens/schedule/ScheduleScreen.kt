@@ -1,43 +1,47 @@
-@file:OptIn(ExperimentalPagerApi::class, ExperimentalPagerApi::class, ExperimentalPagerApi::class)
+@file:OptIn(
+    ExperimentalPagerApi::class, ExperimentalPagerApi::class, ExperimentalPagerApi::class,
+    ExperimentalPagerApi::class
+)
 
 package com.cpe.ui.screens.schedule
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.cpe.data.models.Course
-import com.cpe.ui.composables.ScheduleItem
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cpe.ui.screens.more.ConfigViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -48,65 +52,19 @@ import kotlinx.coroutines.launch
 fun ScheduleScreen(
     modifier: Modifier,
     scope: CoroutineScope,
-    scheduleViewModel: ScheduleViewModel = hiltViewModel()
+    scheduleViewModel: ScheduleViewModel = hiltViewModel(),
+    configViewModel: ConfigViewModel = viewModel()
 ) {
     val pagerState = rememberPagerState()
-    val listState = rememberLazyListState()
+    val context = LocalContext.current
+    val level by configViewModel.getLevelValue(context).collectAsState(initial = "300")
+    scheduleViewModel.selectedLevel.value = level
 
     LaunchedEffect(key1 = scheduleViewModel.today) {
         pagerState.animateScrollToPage(scheduleViewModel.today)
     }
 
     Column(modifier = modifier) {
-        val items = listOf("200", "300", "400", "500")
-        var selectedItem by rememberSaveable { mutableStateOf(items[1]) }
-        var expanded by remember { mutableStateOf(false) }
-
-        /*Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            OutlinedTextField(
-                value = selectedItem,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text(text = "Level") },
-                trailingIcon = {
-                    IconButton(onClick = { expanded = !expanded }) {
-                        val icon = if (expanded)
-                            Icons.Filled.KeyboardArrowUp
-                        else
-                            Icons.Filled.KeyboardArrowDown
-
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = "expand"
-                        )
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                items.forEach { item ->
-                    DropdownMenuItem(
-                        onClick = {
-                            selectedItem = item
-                            expanded = false
-                        },
-                        content = {
-                            Text(text = item)
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-*/
         TabRow(selectedTabIndex = pagerState.currentPage) {
             scheduleViewModel.days.forEachIndexed { index, day ->
                 Tab(
@@ -130,33 +88,128 @@ fun ScheduleScreen(
             count = scheduleViewModel.days.size,
             state = pagerState,
             content = { dayInt ->
-                val classesToday by remember { mutableStateOf(scheduleViewModel.filterClasses(dayInt)) }
-                ScheduleView(state = listState, classesToday)
+                ScheduleView(
+                    state = rememberLazyListState(),
+                    day = dayInt.toString(),
+                    level = scheduleViewModel.selectedLevel.value
+                )
             }
         )
     }
 }
 
 @Composable
-fun ScheduleView(state: LazyListState, classes: List<Course>) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        state = state,
-        content = {
-            items(
-                count = classes.size,
-                /*key = { index -> courses[index].courseCode },*/
-                itemContent = { index ->
-                    ScheduleItem(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .fillMaxWidth(),
-                        course = classes[index]
-                    )
-                }
-            )
-        }
+fun ScheduleView(
+    state: LazyListState,
+    day: String,
+    level: String,
+    scheduleViewModel: ScheduleViewModel = hiltViewModel()
+) {
+    val timeTables = scheduleViewModel.timeTables
+    val classes = scheduleViewModel.filterClasses(
+        day = day,
+        level = level,
+        timeTables
     )
+    val colors = listOf(
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Blue,
+        Color.Cyan
+    )
+
+
+
+    if (classes.isNotEmpty()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = state,
+            content = {
+                items(
+                    count = classes.size,
+                    /*key = { index -> courses[index].courseCode },*/
+                    itemContent = { index ->
+                        /*ScheduleItem(
+                            modifier = Modifier
+                                .height(100.dp)
+                                .fillMaxWidth(),
+                            course = classes[index]
+                        )*/
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    text = classes[index].courseTitle.orEmpty(),
+                                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                )
+                            },
+                            leadingContent = {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(start = 12.dp)
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        /*.background(colors.random(Random(Date().time.toInt())))*/
+                                        .fillMaxHeight()
+                                )
+                            },
+                            supportingContent = {
+                                Column {
+                                    Text(
+                                        text = classes[index].courseCode.orEmpty(),
+                                        fontSize = MaterialTheme.typography.labelLarge.fontSize,
+                                        fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
+                                        maxLines = 1,
+                                    )
+                                    Text(
+                                        text = classes[index].lecturer.orEmpty(),
+                                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                        maxLines = 1,
+                                    )
+                                }
+                            },
+                            trailingContent = {
+                                Column(
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Text(
+                                        text = "Time",
+                                        fontSize = MaterialTheme.typography.labelLarge.fontSize,
+                                        fontWeight = FontWeight.Bold,
+                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 1,
+                                    )
+                                    Text(
+                                        text = "${classes[index].startTime} - ${classes[index].endTime}",
+                                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
+                            }
+                        )
+                        Divider(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .alpha(if (index < classes.size) 1f else 0f)
+                        )
+                    }
+                )
+            }
+        )
+    }
+
+    if (classes.isEmpty()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "No classes scheduled for today")
+        }
+    }
 }
 
 @Preview(showSystemUi = true, showBackground = true)

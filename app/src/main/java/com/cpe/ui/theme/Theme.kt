@@ -10,11 +10,15 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cpe.ui.screens.more.ConfigViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
@@ -44,16 +48,18 @@ fun CPETheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
+    configViewModel: ConfigViewModel = viewModel(),
     content: @Composable () -> Unit
 ) {
+    val context = LocalContext.current
+    val alwaysDark by configViewModel.getDarkModeValue(context).collectAsState(initial = false)
     val systemUiController = rememberSystemUiController()
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
+        darkTheme || alwaysDark -> DarkColorScheme
         else -> LightColorScheme
     }
     val view = LocalView.current
@@ -63,10 +69,10 @@ fun CPETheme(
             window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
             systemUiController.setStatusBarColor(
-                color = if (darkTheme) DarkColorScheme.background else LightColorScheme.background
+                color = if (darkTheme || alwaysDark) DarkColorScheme.background else LightColorScheme.background
             )
             systemUiController.setNavigationBarColor(
-                color = if (darkTheme) Color(0xFF2B2831) else Color(0xfff2EDF7)
+                color = if (darkTheme || alwaysDark) Color(0xFF2B2831) else Color(0xfff2EDF7)
             )
         }
     }

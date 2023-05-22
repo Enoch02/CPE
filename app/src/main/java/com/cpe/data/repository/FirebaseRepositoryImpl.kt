@@ -1,6 +1,6 @@
 package com.cpe.data.repository
 
-import com.cpe.data.models.Course
+import com.cpe.data.models.News
 import com.cpe.data.models.TimeTable
 import com.cpe.util.Resource
 import com.google.firebase.auth.AuthResult
@@ -41,7 +41,17 @@ class FirebaseRepositoryImpl @Inject constructor(
         }
     }
 
-    fun sendSome() {
+    override suspend fun getData(): List<TimeTable> {
+        return db.collection("timetables")
+            .get()
+            .await()
+            .toObjects(TimeTable::class.java).toList()
+    }
 
+    override suspend fun getNews(): List<News> {
+        return db.collection("news")
+            .get()
+            .await()
+            .toObjects(News::class.java)
     }
 }

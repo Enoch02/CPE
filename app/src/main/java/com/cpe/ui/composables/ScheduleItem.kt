@@ -64,13 +64,13 @@ fun ScheduleItem(modifier: Modifier, course: Course) {
                     horizontalAlignment = Alignment.Start,
                     content = {
                         Text(
-                            text = course.courseCode,
+                            text = course.courseCode ?: "",
                             fontSize = MaterialTheme.typography.labelLarge.fontSize,
                             fontWeight = MaterialTheme.typography.labelLarge.fontWeight,
                             maxLines = 1,
                         )
                         Text(
-                            text = course.lecturer,
+                            text = course.lecturer ?: "",
                             fontSize = MaterialTheme.typography.bodySmall.fontSize,
                             maxLines = 1,
                         )
@@ -130,10 +130,10 @@ private fun Preview() {
             course = Course(
                 courseTitle = "Demo Course",
                 courseCode = "DEM 101",
-                dayOfWeek = 1,
+                dayOfWeek = "1",
                 startTime = "8:00 am",
                 endTime = "9:00 am",
-                lecturer = "Engineer Jagun",
+                lecturer = "Engineer",
             )
         )
     }

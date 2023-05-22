@@ -14,6 +14,7 @@ sealed class Screen(val route: String) {
     object GpCalculatorScreen : Screen("cgpa_calc_screen")
     object OutlineScreen : Screen("outline_screen")
     object NewsScreen : Screen("news_screen")
+    object AboutScreen : Screen("about_screen")
 
     fun withArgs(vararg args: String): String {
         return buildString {
