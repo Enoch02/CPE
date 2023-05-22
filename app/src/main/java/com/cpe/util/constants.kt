@@ -1,6 +1,27 @@
 package com.cpe.util
 
 object Constants {
+    val names = listOf(
+        "Adesanya Enoch",
+        "Olajide Olamide",
+        "Alayaki Temitope",
+        "Olugbenga Samuel",
+        "Bamidele-Ilo Gbolahan",
+        "Bakare Daniel",
+        "Ogunmodede Joshua",
+        "Kolawole Olaoluwa"
+    )
+    val matricNumbers = listOf(
+        "EES/19/20/0065",
+        "EES/19/20/0420",
+        "EES/19/20/0148",
+        "EES/19/20/0453",
+        "EES/19/20/0205",
+        "EES/19/20/0197",
+        "EES/19/20/0376",
+        "EES/18/20/0303"
+    )
+
     val levels = listOf("200", "300", "400", "500")
 
     val courses200 = listOf(
