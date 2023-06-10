@@ -1,9 +1,12 @@
 package com.cpe.ui.theme
 
 import android.app.Activity
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -94,9 +97,9 @@ fun CPETheme(
     val alwaysDark by configViewModel.getDarkModeValue(context).collectAsState(initial = false)
     val systemUiController = rememberSystemUiController()
     val colorScheme = when {
-        /*dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             if (darkTheme || alwaysDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }*/
+        }
         darkTheme || alwaysDark -> DarkColorScheme
         else -> LightColorScheme
     }

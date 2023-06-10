@@ -24,7 +24,7 @@ class OutlineScreenViewModel : ViewModel() {
             clearSearchResults()
         }
         courses.forEach { course ->
-            if (isSimilarString(query, course.first)) {
+            if (course.first.contains(query)) {
                 searchResults.add(course)
             }
         }
@@ -59,40 +59,4 @@ class OutlineScreenViewModel : ViewModel() {
             }
         }
     }
-
-    /**
-     * "Levenshtein distance algorithm"
-     */
-    private fun isSimilarString(string1: String, string2: String): Boolean {
-        val m = string1.length
-        val n = string2.length
-
-        // Create a 2D array to store the distances
-        val distances = Array(m + 1) { IntArray(n + 1) }
-
-        // Initialize the first row and column of the array
-        for (i in 0..m) {
-            distances[i][0] = i
-        }
-        for (j in 0..n) {
-            distances[0][j] = j
-        }
-
-        // Calculate the minimum distance
-        for (i in 1..m) {
-            for (j in 1..n) {
-                val substitutionCost = if (string1[i - 1] == string2[j - 1]) 0 else 1
-                distances[i][j] = minOf(
-                    distances[i - 1][j] + 1,         // Deletion
-                    distances[i][j - 1] + 1,         // Insertion
-                    distances[i - 1][j - 1] + substitutionCost  // Substitution
-                )
-            }
-        }
-
-        // Check if the distance is within a certain threshold
-        val threshold = 3  // Set your desired threshold here
-        return distances[m][n] <= threshold
-    }
-
 }

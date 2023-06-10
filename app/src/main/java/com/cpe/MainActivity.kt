@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     CompositionLocalProvider(
                         LocalDensity provides Density(
                             density = LocalDensity.current.density,
-                            fontScale = 1f // - we set here default font scale instead of system one
+                            fontScale = 1f
                         ),
                         content = {
                             NavigationGraph()

@@ -53,12 +53,13 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                 .fillMaxWidth()
                 .height(128.dp),
         ) {
-            val intent = remember {
+            val portalIntent = remember {
                 Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse("https://stdportal.oouagoiwoye.edu.ng/index.php")
                 )
             }
+
             GridItem(
                 label = "OOU Student Portal",
                 icon = painterResource(R.drawable.baseline_school_24),
@@ -66,7 +67,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                     .fillMaxSize()
                     .weight(1f),
                 onClick = {
-                    context.startActivity(intent)
+                    context.startActivity(portalIntent)
                 }
             )
 
@@ -123,6 +124,13 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                 .fillMaxWidth()
                 .height(128.dp),
         ) {
+            val webVersionIntent = remember {
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://allukmanniy.github.io/ooucedwebsite/////HOME/Home.html")
+                )
+            }
+
             GridItem(
                 label = "E-Library",
                 icon = painterResource(id = R.drawable.baseline_library_books),
@@ -143,7 +151,7 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                     .fillMaxSize()
                     .weight(1f),
                 onClick = {
-                    Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show()
+                    context.startActivity(webVersionIntent)
                 }
             )
         }
