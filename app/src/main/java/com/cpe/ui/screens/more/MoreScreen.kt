@@ -47,6 +47,7 @@ import com.cpe.ui.screens.schedule.ScheduleViewModel
 import com.cpe.util.Constants
 import com.cpe.util.getAppVersion
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoreScreen(
     navController: NavController,
@@ -123,12 +124,15 @@ fun MoreScreen(
                                             }
 
                                             ListItem(
-                                                headlineContent = { Text(text = it) },
-                                                trailingContent = {
+                                                leadingContent = {
                                                     RadioButton(
                                                         selected = it == level,
                                                         onClick = { onClick() }
                                                     )
+                                                },
+                                                headlineContent = { Text(text = it) },
+                                                trailingContent = {
+
                                                 },
                                                 modifier = Modifier.clickable { onClick() }
                                             )

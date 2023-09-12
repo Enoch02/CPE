@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.cpe.ui.screens
 
@@ -26,8 +26,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +43,7 @@ import com.cpe.ui.navigation.Screen
 @Composable
 fun HomeScreen(modifier: Modifier, navController: NavController) {
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     Column(
         modifier = modifier
@@ -67,7 +70,8 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                     .fillMaxSize()
                     .weight(1f),
                 onClick = {
-                    context.startActivity(portalIntent)
+                    uriHandler.openUri("https://stdportal.oouagoiwoye.edu.ng/index.php")
+                    /*context.startActivity(portalIntent)*/
                 }
             )
 
@@ -152,6 +156,39 @@ fun HomeScreen(modifier: Modifier, navController: NavController) {
                     .weight(1f),
                 onClick = {
                     context.startActivity(webVersionIntent)
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(128.dp),
+        ) {
+            GridItem(
+                label = "Chat",
+                icon = painterResource(id = R.drawable.baseline_chat_24),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+                onClick = {
+
+                }
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            GridItem(
+                label = "Web Version",
+                icon = painterResource(id = R.drawable.baseline_interwebs_24),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f)
+                    .alpha(0f),
+                onClick = {
+
                 }
             )
         }
