@@ -1,6 +1,6 @@
 @file:OptIn(
     ExperimentalPagerApi::class, ExperimentalPagerApi::class, ExperimentalPagerApi::class,
-    ExperimentalPagerApi::class
+    ExperimentalPagerApi::class, ExperimentalPagerApi::class, ExperimentalPagerApi::class
 )
 
 package com.cpe.ui.screens.schedule
@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +46,7 @@ import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ScheduleScreen(
     modifier: Modifier,
@@ -56,10 +56,9 @@ fun ScheduleScreen(
 ) {
     val pagerState = rememberPagerState()
     val context = LocalContext.current
-    if (scheduleViewModel.selectedLevel.value.isNullOrEmpty()) {
-        val level by configViewModel.getLevelValue(context).collectAsState(initial = "300")
-        scheduleViewModel.selectedLevel.value = level
-    }
+    val level by configViewModel.getLevelValue(context).collectAsState(initial = "300")
+    scheduleViewModel.selectedLevel.value = level
+
 
     LaunchedEffect(key1 = scheduleViewModel.today) {
         pagerState.animateScrollToPage(scheduleViewModel.today)
@@ -110,15 +109,15 @@ fun ScheduleView(
     val classes = scheduleViewModel.filterClasses(
         day = day,
         level = level,
-        timeTables
+        timeTables = timeTables
     )
-    val colors = listOf(
+    /*val colors = listOf(
         Color.Red,
         Color.Yellow,
         Color.Green,
         Color.Blue,
         Color.Cyan
-    )
+    )*/
 
 
 
