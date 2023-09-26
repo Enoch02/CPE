@@ -20,8 +20,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +65,7 @@ fun ScheduleScreen(
     }
 
     Column(modifier = modifier) {
-        TabRow(selectedTabIndex = pagerState.currentPage) {
+        ScrollableTabRow(selectedTabIndex = pagerState.currentPage) {
             scheduleViewModel.days.forEachIndexed { index, day ->
                 Tab(
                     selected = index == pagerState.currentPage,
